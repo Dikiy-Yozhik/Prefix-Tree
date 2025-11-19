@@ -36,8 +36,8 @@
 ### Для Windows
 ```bash
 # Клонирование репозитория
-git clone https://github.com/yourusername/prefix-tree.git
-cd prefix-tree
+git clone https://github.com/Dikiy-Yozhik/Prefix-Tree.git
+cd Prefix-Tree
 
 # Компиляция проекта 
 scripts\windows\compile.bat
@@ -53,8 +53,8 @@ scripts\windows\run_test.bat basic_test
 ```
 ### Для Linux/Mac
 ```bash
-git clone https://github.com/yourusername/prefix-tree.git
-cd prefix-tree
+git clone https://github.com/Dikiy-Yozhik/Prefix-Tree.git
+cd Prefix-Tree
 
 chmod +x scripts/linux/*.sh
 
@@ -175,3 +175,4 @@ java -cp bin Main
 ```
 ##
 *Проект разработан в образовательных целях для демонстрации принципов работы с древовидными структурами данных и алгоритмами обработки строк.*
+
