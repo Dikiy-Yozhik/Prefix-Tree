@@ -5,10 +5,12 @@ public class TrieNode {
 
     private final TrieNode[] children;
     private boolean endOfWord;
+    private int frequency;
 
     public TrieNode() {
         this.children = new TrieNode[ALPHABET_SIZE];
         this.endOfWord = false;
+        this.frequency = 0;
     }
 
     private int charToIndex(char c) {
@@ -37,5 +39,17 @@ public class TrieNode {
 
     public void setEndOfWord(boolean flag) {
         endOfWord = flag;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    public void incrementFrequency() {
+        this.frequency++;
     }
 } 

@@ -1,6 +1,7 @@
 package trie;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Trie {
@@ -32,7 +33,10 @@ public class Trie {
         }
 
         TrieNode node = findNode(word);
-        return node != null && node.isEndOfWord();
+        boolean found = (node != null && node.isEndOfWord());
+
+        if (found) node.incrementFrequency();
+        return found;
     }
 
     public boolean startsWith(String prefix) {          
@@ -79,6 +83,8 @@ public class Trie {
         System.out.println("└── root");
         printNode(root, "", true, ' ');
     }
+
+// =========================================================================
 
 // ======================== Вспомогательные методы ==========================
 
@@ -182,6 +188,67 @@ public class Trie {
             boolean lastChild = (i == existingChildren.size() - 1);
             
             printNode(node.getChild(childChar), childPrefix, lastChild, childChar);
+        }
+    }
+
+// =========================================================================
+
+// ============================ Частоты ====================================
+    public void incrementFrequency(String word) {
+        if (word == null || word.isEmpty()) {
+            return;
+        }
+        
+        TrieNode node = findNode(word);
+        if (node != null && node.isEndOfWord()) {
+            node.incrementFrequency();
+        }
+    }
+
+    public void setFrequency(String word, int frequency) {
+        if (word == null || word.isEmpty()) {
+            return;
+        }
+        
+        TrieNode node = findNode(word);
+        if (node != null && node.isEndOfWord()) {
+            node.setFrequency(frequency);
+        }
+    }
+
+    public int getWordFrequency(String word) {
+        if (word == null || word.isEmpty()) {
+            return 0;
+        }
+        
+        TrieNode node = findNode(word);
+        return (node != null && node.isEndOfWord()) ? node.getFrequency() : 0;
+    }
+
+    public List<WordFrequency> getAutocompleteSuggestions(String prefix) {
+        List<WordFrequency> suggestions = new ArrayList<>();
+        if (prefix == null || prefix.isEmpty()) {
+            return suggestions;
+        }
+
+        TrieNode prefixNode = findNode(prefix);
+        if (prefixNode != null) {
+            collectWordsWithFrequency(prefixNode, prefix, suggestions);
+        }
+
+        Collections.sort(suggestions);
+        return suggestions;
+    }
+
+    private void collectWordsWithFrequency(TrieNode node, String currentWord, List<WordFrequency> results) {
+        if (node.isEndOfWord()) {
+            results.add(new WordFrequency(currentWord, node.getFrequency()));
+        }
+        
+        for (char c = 'a'; c <= 'z'; c++) {
+            if (node.hasChild(c)) {
+                collectWordsWithFrequency(node.getChild(c), currentWord + c, results);
+            }
         }
     }
 }
